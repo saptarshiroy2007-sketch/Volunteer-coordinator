@@ -1,4 +1,5 @@
 import json
+import os
 import math
 from datetime import datetime
 
@@ -10,20 +11,20 @@ SKILL_MAP = {
     "Environment": ["Logistics"],
     "Women Empowerment": ["Counseling", "Legal", "Teaching"],
 }
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def load_data():
-    with open("C:/Users/sapta/Documents/Python projects/volunteer_coord/data/needs.json") as f:
+    with open(os.path.join(BASE_DIR, "data", "needs.json")) as f:
         needs = json.load(f)
-    with open("C:/Users/sapta/Documents/Python projects/volunteer_coord/data/volunteers.json") as f:
+    with open(os.path.join(BASE_DIR, "data", "volunteers.json")) as f:
         volunteers = json.load(f)
     return needs, volunteers
 
 def save_data(needs, volunteers):
-    with open("/home/claude/volunteer_coord/data/needs.json", "w") as f:
+    with open(os.path.join(BASE_DIR, "data", "needs.json"), "w") as f:
         json.dump(needs, f, indent=2)
-    with open("/home/claude/volunteer_coord/data/volunteers.json", "w") as f:
+    with open(os.path.join(BASE_DIR, "data", "volunteers.json"), "w") as f:
         json.dump(volunteers, f, indent=2)
-
 def compute_urgency_score(need):
     """
     Urgency = weighted combo of severity, mention frequency, recency, and gap in volunteers.
